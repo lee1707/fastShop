@@ -6,7 +6,7 @@ public class UserVO {
 	private String passwd;
 	private int point;
 	private String coupon;
-	private String productId;
+	private String email;
 	
 	public int getId() {
 		return id;
@@ -38,11 +38,11 @@ public class UserVO {
 	public void setCoupon(String coupon) {
 		this.coupon = coupon;
 	}
-	public String getProductId() {
-		return productId;
+	public String getEmail() {
+		return email;
 	}
-	public void setProductId(String productId) {
-		this.productId = productId;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	
