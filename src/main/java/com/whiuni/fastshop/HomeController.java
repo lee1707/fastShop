@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.whiuni.fastshop.vo.UserVO;
+
 /**
  * Handles requests for the application home page.
  */
@@ -119,4 +121,20 @@ public class HomeController {
 		
 		return "register";
 	}
+	/**
+	@RequestMapping(value = "/add_member", method = RequestMethod.GET)
+	public String addMember(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		UserVO userVO = new UserVO();
+		userVO.setEmail("whiuni@naver.com");
+		
+		UserDetailVO.setDetailVO = new UserDetailVO();
+		userDetailVO.setAddress("аж╪р")
+		
+		UserBO.insertWithDetail(userVO, userDetalVO);
+		
+		return "products";
+	}
+	**/
 }

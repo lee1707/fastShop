@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="Order">
+	<resultMap id="resultOrderVO" type="com.whiuni.fastshop.vo.OrderVO">
+		<id property="id" column="id" />
+		<result property="userId" column="userId" />
+		<result property="productId" column="productId" />
+		<result property="address" column="address" />
+		<result property="productName" column="productName" />
+		<result property="price" column="price" />
+		<result property="imageUrl" column="imageUrl" />
+	</resultMap>
+
+	<insert id="insert" parameterType="com.whiuni.fastshop.vo.OrderVO" >
+		INSERT INTO `order` ( userId, productId, address, productName, price, imageUrl ) VALUES ( 1, #{productId}, #{address}, #{productName}, #{price}, #{imageUrl} ) 
+			<!--  //default value-->
+	</insert>
+
+	<select id="selectList" parameterType="java.util.HashMap"
+		resultMap="resultOrderVO">
+		SELECT * FROM `order` LIMIT 10
+	</select>
+
+	<update id="update" parameterType="com.whiuni.fastshop.vo.OrderVO">
+		UPDATE 
+			`order` SET
+		userId = #{userId}
+		,productId = #{productId}
+		,address = #{address}
+		,productName = #{productName}
+		,price = #{price}
+		,imageUrl = #{imageUrl}
+			WHERE
+		id = #{id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM `order` WHERE id = #{id}
+	</delete>
+</mapper>
+
+

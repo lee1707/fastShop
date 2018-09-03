@@ -30,5 +30,30 @@ public class UserDAOTest {
 		
 		userDAO.insert(userVO);
 	}
+	
+	@Test
+	public void selectList() {
+		List<UserVO> userList = userDAO.selectList();
+		
+		for(UserVO userVO : userList) {
+			System.out.println(userVO.getUsername());
+		}
+	}
 
+	@Test
+	public void update() {
+		UserVO userVO = new UserVO();
+		userVO.setUsername("whiuni");
+		userVO.setPasswd("12345");
+		userVO.setPoint(200);
+		userVO.setCoupon("TWO");
+		userVO.setEmail("hello.naver.com");
+		userVO.setId(1);
+		userDAO.update(userVO);
+	}
+	
+	@Test
+	public void delete() {
+		userDAO.delete(1);
+	}
 }

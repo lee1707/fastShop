@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="Product">
+
+    <resultMap id="resultProductVO" type="com.whiuni.fastshop.vo.ProductVO">
+        <id property="id" column="id" />
+        <result property="image_url" column="image_url"/>
+        <result property="name" column="name"/>
+        <result property="price" column="price"/>
+        <result property="description" column="description"/>
+        <result property="company_id" column="company_id" />
+    </resultMap>
+	
+	<!-- UserDao에서 insert를 하면 UserVo를 읽어서 여기에 넣어주는 것임 -->
+	<insert id="insert" parameterType="com.whiuni.fastshop.vo.ProductVO" >
+		INSERT INTO product ( image_url, name, price, description, company_id )
+			VALUES ( #{image_url}, #{name}, #{price}, #{description}, 1 ) 
+			<!--  //default value-->
+	</insert>
+	
+	<!--  selectList가 호출되면 나온 값을 resultUserVO에 매칭시켜서 값을 만들어라 -->
+    <select id="selectList" parameterType="java.util.HashMap" resultMap="resultProductVO">
+        SELECT * FROM product LIMIT 10
+    </select>
+
+	<update id="update" parameterType="com.whiuni.fastshop.vo.ProductVO">
+		UPDATE product SET
+			image_url = #{image_url}
+			,name = #{name}
+			,price = #{price}
+			,description = #{description}
+			,company_id = #{company_id}
+			WHERE 
+				id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM product WHERE id = #{id}
+	</delete>
+</mapper>
+
+

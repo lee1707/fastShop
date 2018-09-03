@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="OrdersProducts">
+    <resultMap id="resultOrdersProductsVO" type="com.whiuni.fastshop.vo.OrdersProductsVO">
+        <id property="id" column="id" />
+        <result property="order_id" column="order_id"/>
+        <result property="product_id" column="product_id"/>
+    </resultMap>
+    
+	<insert id="insert" parameterType="com.whiuni.fastshop.vo.OrdersProductsVO">
+		INSERT INTO orders_products ( order_id, product_id )
+			VALUES ( #{order_id}, #{product_id} )
+	</insert>
+	
+    <select id="selectList" parameterType="java.util.HashMap" resultMap="resultOrdersProductsVO">
+        SELECT * FROM orders_products LIMIT 10
+    </select>
+
+	<update id="update" parameterType="com.whiuni.fastshop.vo.OrdersProductsVO">
+		UPDATE orders_products SET
+			order_id = #{order_id}
+			,product_id = #{product_id}
+			WHERE 
+				id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM orders_products WHERE id = #{id}
+	</delete>
+</mapper>
+
+

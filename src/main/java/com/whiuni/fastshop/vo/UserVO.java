@@ -7,7 +7,14 @@ public class UserVO {
 	private int point;
 	private String coupon;
 	private String email;
+	private String regdate;
 	
+	public String getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
+	}
 	public int getId() {
 		return id;
 	}

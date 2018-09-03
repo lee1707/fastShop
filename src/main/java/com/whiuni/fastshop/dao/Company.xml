@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="Company">
+    <resultMap id="resultCompanyVO" type="com.whiuni.fastshop.vo.CompanyVO">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="fax" column="fax"/>
+        <result property="email" column="email" />
+    </resultMap>
+	<!--  column이 실제 SQL에서 있는 이름임  -->
+	
+	<insert id="insert" parameterType="com.whiuni.fastshop.vo.CompanyVO">
+		INSERT INTO company ( name, phone, fax, email )
+			VALUES ( #{name}, #{phone}, #{fax}, #{email} )
+	</insert>
+	
+    <select id="selectList" parameterType="java.util.HashMap" resultMap="resultCompanyVO">
+        SELECT * FROM company LIMIT 10
+    </select>
+
+	<update id="update" parameterType="com.whiuni.fastshop.vo.CompanyVO">
+		UPDATE company SET
+			name = #{name}
+			,phone = #{phone}
+			,fax = #{fax}
+			,email = #{email}
+			WHERE 
+				id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM company WHERE id = #{id}
+	</delete>
+</mapper>
+
+

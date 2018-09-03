@@ -15,6 +15,7 @@
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/bootstrap/**" location="/resources/bootstrap/" />
 	<resources mapping="/themes/**" location="/resources/themes/" />
+	<resources mapping="/resources/**" location="/resources/admin" />
 	<resources mapping="/resources/**" location="/resources/" />
 
 
@@ -61,9 +62,29 @@
 		<beans:constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</beans:bean>
 	
-	<beans:bean id="UserVO" class="com.xenonix.fastshop.vo.UserVO"></beans:bean>
-	<beans:bean id="UserDAO" class="com.xenonix.fastshop.dao.UserDAO">
+		<beans:bean id="UserVO" class="com.whiuni.fastshop.vo.UserVO"></beans:bean>
+	<beans:bean id="UserDAO" class="com.whiuni.fastshop.dao.UserDAO">
 		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</beans:bean>
+
+	<beans:bean id="CompanyVO" class="com.whiuni.fastshop.vo.CompanyVO"></beans:bean>
+	<beans:bean id="CompanyDAO" class="com.whiuni.fastshop.dao.CompanyDAO">
+		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</beans:bean>
+
+	<beans:bean id="OrdersProductsVO" class="com.whiuni.fastshop.vo.OrdersProductsVO"></beans:bean>
+	<beans:bean id="OrdersProductsDAO" class="com.whiuni.fastshop.dao.OrdersProductsDAO">
+		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</beans:bean>
+
+	<beans:bean id="OrderVO" class="com.whiuni.fastshop.vo.OrderVO"></beans:bean>
+	<beans:bean id="OrderDAO" class="com.whiuni.fastshop.dao.OrderDAO">
+		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</beans:bean>
+	
+	<beans:bean id="ProductVO" class="com.whiuni.fastshop.vo.ProductVO"></beans:bean>
+	<beans:bean id="ProductDAO" class="com.whiuni.fastshop.dao.ProductDAO">
+		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</beans:bean>
 	
 	

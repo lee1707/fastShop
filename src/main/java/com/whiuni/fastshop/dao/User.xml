@@ -2,17 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
 <mapper namespace="User">
-<!--  
-    <resultMap id="resultUserVO" type="com.xenonix.fastshop.vo.UserVO">
+
+    <resultMap id="resultUserVO" type="com.whiuni.fastshop.vo.UserVO">
         <id property="id" column="id" />
         <result property="username" column="username"/>
-        <result property="realname" column="realname"/>
         <result property="passwd" column="passwd"/>
+        <result property="point" column="point"/>
+        <result property="coupon" column="coupon"/>
         <result property="email" column="email" />
-        <result property="regDatetime" column="reg_datetime"/>
+        <result property="regdate" column="reg_datetime"/>
     </resultMap>
--->
-
+	<!--  이 부분에 에러가 있으니 잡아야함  -->
+	
+	
+	
 	<!-- UserDao에서 insert를 하면 UserVo를 읽어서 여기에 넣어주는 것임 -->
 	<insert id="insert" parameterType="com.whiuni.fastshop.vo.UserVO">
 		INSERT INTO user ( username, passwd, point, coupon, email, reg_datetime )
@@ -20,10 +23,25 @@
 	<!-- #에 {}하고 온 것은 VO의 멤버변수명임 -->
 	</insert>
 	
-	
-<!--  
+	<!--  selectList가 호출되면 나온 값을 resultUserVO에 매칭시켜서 값을 만들어라 -->
     <select id="selectList" parameterType="java.util.HashMap" resultMap="resultUserVO">
-        SELECT * FROM users LIMIT 10
+        SELECT * FROM user LIMIT 10
     </select>
--->
+
+	<update id="update" parameterType="com.whiuni.fastshop.vo.UserVO">
+		UPDATE user SET
+			username = #{username}
+			,passwd = #{passwd}
+			,point = #{point}
+			,coupon = #{coupon}
+			,email = #{email}
+			WHERE 
+				id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE FROM user WHERE id = #{id}
+	</delete>
 </mapper>
+
+
