@@ -56,4 +56,10 @@ public class UserDAOTest {
 	public void delete() {
 		userDAO.delete(1);
 	}
+	
+	public void selectByUsername() {
+		UserVO userVO = new UserVO();
+		userDAO.selectByUsername("aa");
+		System.out.println(userVO.getEmail());
+	}
 }

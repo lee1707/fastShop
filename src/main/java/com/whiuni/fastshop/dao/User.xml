@@ -25,7 +25,15 @@
 	
 	<!--  selectList가 호출되면 나온 값을 resultUserVO에 매칭시켜서 값을 만들어라 -->
     <select id="selectList" parameterType="java.util.HashMap" resultMap="resultUserVO">
-        SELECT * FROM user LIMIT 10
+        SELECT * FROM user ORDER BY id DESC LIMIT 10
+    </select>
+    
+    <select id="select" parameterType="int" resultMap="resultUserVO">
+        SELECT * FROM user WHERE id = #{id}
+    </select>
+
+	<select id="selectByUsername" parameterType="String" resultMap="resultUserVO">
+        SELECT * FROM user WHERE username = #{id}
     </select>
 
 	<update id="update" parameterType="com.whiuni.fastshop.vo.UserVO">

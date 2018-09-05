@@ -16,7 +16,7 @@
 		up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/themes/**" location="/resources/themes/" />
 	<resources mapping="/bootstrap/**" location="/resources/bootstrap/" />
-	<resources mapping="/resources/**" location="/resources/admin" />
+	<resources mapping="/admin/**" location="/resources/admin/" />
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<beans:bean

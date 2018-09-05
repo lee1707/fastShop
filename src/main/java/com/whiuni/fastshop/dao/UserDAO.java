@@ -26,12 +26,14 @@ public class UserDAO extends SqlSessionDaoSupport{
 		Map<String, String> paramMap = new HashMap<String, String>();
 		return getSqlSession().selectList("User.selectList",paramMap);
 	}
-//	
-//	public UserVO select(UserVO id) {
-//		Map<String, String> paramMap = new HashMap<String, String>();
-//		paramMap.put("id", id);
-//		return getSqlSession().select("User.select",id);
-//	}
+	
+	public UserVO select(int id) {
+		return getSqlSession().selectOne("User.select",id);
+	}
+
+	public UserVO selectByUsername(String username) {
+		return getSqlSession().selectOne("User.selectByUsername",username);
+	}
 	
 	public void update(UserVO userVO) {
 		getSqlSession().update("User.update", userVO);
@@ -40,4 +42,6 @@ public class UserDAO extends SqlSessionDaoSupport{
 	public void delete(int id) {
 		getSqlSession().delete("User.delete",id);
 	}
+
+
 }
