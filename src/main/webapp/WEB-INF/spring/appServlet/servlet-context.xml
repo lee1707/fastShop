@@ -18,6 +18,7 @@
 	<resources mapping="/bootstrap/**" location="/resources/bootstrap/" />
 	<resources mapping="/admin/**" location="/resources/admin/" />
 	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/images/**" location="C:\\Users\\gramgram\\Desktop\\java"/>
 
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -58,6 +59,11 @@
 		<beans:constructor-arg name="sqlSessionFactory"
 			ref="sqlSessionFactory" />
 	</beans:bean>
+	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <beans:property name="defaultEncoding" value="UTF-8"/>
+        <beans:property name="maxUploadSize" value="2000000" />
+    </beans:bean>
 
 	<!-- 이건 콩 집 안의 콩을 만드는 것임 UserDAO는 sqlSessionTemplate을 가져다가 매개변수로 쓰는데 얘는 
 		누구냐 ref인 sqlSessionTemplate이다, 이렇게 읽으면서 올라가면됨 -->

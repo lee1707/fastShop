@@ -25,27 +25,14 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="com.xenonix.fastshop" />
+	<context:component-scan base-package="com.whiuni.fastshop" />
 	
-	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <beans:property name="locations" value="WEB-INF/global.properties"/>
-    </beans:bean>
-    
-    <!--  
 	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	    <beans:property name="driverClassName" value="${jdbc.driverClassName}" />
-	    <beans:property name="url" value="localhost" />
-	    <beans:property name="username" value="fastshop" />
-	    <beans:property name="password" value="fastshop" />
+	    <beans:property name="url" value="${jdbc.url}" />
+	    <beans:property name="username" value="${jdbc.username}" />
+	    <beans:property name="password" value="${jdbc.password}" />
 	</beans:bean>
-	-->
-	
-	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <beans:property name="driverClassName" value="${jdbc.driverClassName}" />
-        <beans:property name="url" value="${jdbc.url}" />
-        <beans:property name="username" value="${jdbc.username}" />
-        <beans:property name="password" value="${jdbc.password}" />
-    </beans:bean>
 
 	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 	    <beans:property name="dataSource" ref="dataSource" />
@@ -53,39 +40,41 @@
 	
 	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	    <beans:property name="dataSource" ref="dataSource" />
-	    <beans:property name="typeAliasesPackage" value="com.xenonix.fastshop" />
+	    <beans:property name="typeAliasesPackage" value="com.whiuni.fastshop" />
 	    <beans:property name="configLocation" value="/WEB-INF/mybatis-config.xml"/>
-	    <beans:property name="mapperLocations" value="classpath*:com/xenonix/fastshop/dao/*.xml" />
+	    <beans:property name="mapperLocations" value="classpath*:com/whiuni/fastshop/dao/sqlmap/*.xml" />
 	</beans:bean>
 	
 	<beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
 	</beans:bean>
 	
-		<beans:bean id="UserVO" class="com.whiuni.fastshop.vo.UserVO"></beans:bean>
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="defaultEncoding" value="UTF-8"/>
+		<beans:property name="maxUploadSize" value="2000000" />
+	</beans:bean>
+	
+	
+	<beans:bean id="UserBO" class="com.whiuni.fastshop.bo.UserBO" />
 	<beans:bean id="UserDAO" class="com.whiuni.fastshop.dao.UserDAO">
 		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</beans:bean>
-
-	<beans:bean id="CompanyVO" class="com.whiuni.fastshop.vo.CompanyVO"></beans:bean>
-	<beans:bean id="CompanyDAO" class="com.whiuni.fastshop.dao.CompanyDAO">
+	
+	<beans:bean id="UserDetailDAO" class="com.whiuni.fastshop.dao.UserDetailDAO">
 		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</beans:bean>
-
-	<beans:bean id="OrdersProductsVO" class="com.whiuni.fastshop.vo.OrdersProductsVO"></beans:bean>
-	<beans:bean id="OrdersProductsDAO" class="com.whiuni.fastshop.dao.OrdersProductsDAO">
+	
+	<beans:bean id="BrandDAO" class="com.whiuni.fastshop.dao.BrandDAO">
 		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</beans:bean>
-
-	<beans:bean id="OrderVO" class="com.whiuni.fastshop.vo.OrderVO"></beans:bean>
+	
+	<beans:bean id="ProductDAO" class="com.whiuni.fastshop.dao.ProductDAO">
+		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</beans:bean>
+	
 	<beans:bean id="OrderDAO" class="com.whiuni.fastshop.dao.OrderDAO">
 		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</beans:bean>
 	
-	<beans:bean id="ProductVO" class="com.whiuni.fastshop.vo.ProductVO"></beans:bean>
-	<beans:bean id="ProductDAO" class="com.whiuni.fastshop.dao.ProductDAO">
-		<beans:property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
-	</beans:bean>
-	
-	
+
 </beans:beans>

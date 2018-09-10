@@ -393,33 +393,31 @@
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th>고객번호</th>
-                                        <th>아이디</th>
-                                        <th>비밀번호</th>
-                                        <th>포인트</th>
-                                        <th>쿠폰</th>
-                                        <th>이메일</th>
-                                        <th>가입일</th>
+                                        <th>물건번호</th>
+                                        <th>물건이미지</th>
+                                        <th>물건이름</th>
+                                        <th>가격</th>
+                                        <th>상세정보</th>
+                                        <th>물건회사()</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <!-- controller에서 넘긴 값을 가져옴 -->
-<c:forEach items="${userList}" var="userVO">
+<c:forEach items="${productList}" var="productVO">
                                     <tr class="odd gradeX">
-                                        <td>${userVO.id}</td>  <!-- a tag넣기 -->
-                                        <td><a href="/admin/users/info?id=${userVO.id}">${userVO.username}</a></td>
-                                        <td>${userVO.passwd}</td>
-                                        <td>${userVO.point}</td>
-                                        <td>${userVO.coupon}</td>
-                                        <td class="center">${userVO.email}</td>
-                                        <td class="center">${userVO.regdate}</td>
+                                        <td>${productVO.id}</td>  <!-- 이 부분 수정필요함 -->
+                                        <td><img width="100" src="/files/${productVO.image_url}"/></td>
+                                        <td><a href="/admin/products/info?id=${productVO.id}">${productVO.name}</a></td>
+                                        <td>${productVO.price}</td>
+                                        <td>${productVO.description}</td>
+                                        <td>${productVO.company_id}</td>
                                     </tr>
 </c:forEach>                            
    
                                 </tbody>
       
                             </table>  
-                            <a href="add" class="btn-btn-success">회원추가</a>  
+                            <a href="add" class="btn-btn-success">물품추가</a>  
                         </div>
                         <!-- /.panel-body -->
                     </div>

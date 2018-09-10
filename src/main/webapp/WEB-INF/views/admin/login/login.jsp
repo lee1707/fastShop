@@ -1,7 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -51,7 +50,7 @@
                                     <input class="form-control" placeholder="아이디(username)를 입력하세요" name="username" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="비밀번호를 입력하세요" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="비밀번호를 입력하세요" name="passwd" type="password" value="">
                                 </div>
                                 <div class="checkbox">
                                     <label>
@@ -59,7 +58,7 @@
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <a href="index.html" class="btn btn-lg btn-success btn-block">Login</a>
+                                <button type="submit" class="btn btn-lg btn-success btn-block">Login</button>
                             </fieldset>
                         </form>
                     </div>

@@ -1,5 +1,12 @@
 package com.whiuni.fastshop;
 
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpSession;
+
 import java.util.List;
 import java.util.Locale;
 
@@ -12,16 +19,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.whiuni.fastshop.dao.UserDAO;
 import com.whiuni.fastshop.vo.UserVO;
 
-/**
- * Handles requests for the application home page.
- */
+
 @Controller
-@SessionAttributes({"sessionUsername", "sessionEmail"})
+@SessionAttributes({"sessionUsername","sessionEmail"})
 public class AdminController {
 		
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
@@ -29,62 +35,52 @@ public class AdminController {
 	@Autowired
 	private UserDAO userDAO;
 	
-	////////////////////////////////////이 아래부분 고쳐야됨~~~~~~~~~~~~~~~~~
 	@RequestMapping(value = "/admin/users/list", method = RequestMethod.GET)
-	public String list(Locale locale, Model model) {
-			@ModelAttribute("sessionUsername") String sessionUsername
-			, @ModelAttribute("sessionUsername") String sessionEmail
-			, @RequestParam(required=false, value="username") String username
+	public String list(
+			@SessionAttribute(required=false, value="sessionUsername") String sessionUsername
+			, @SessionAttribute(required=false, value="sessionEmail") String sessionEmail
+			, @RequestParam(value="username", defaultValue="") String username
+			, @RequestParam(value="id", defaultValue="0") int id
 			, Locale locale
 			, Model model) {
 	
-				//로그인 성공햇는가에 따라 다르게 나누기
-				
-				//userDAO의 list를 가져와서 userlist로 저장
-		List<UserVO> userList = userDAO.selectList();
+			//로그인 성공햇는가에 따라 다르게 나누기
+			if(sessionUsername.equals("")) {
+				return "redirect:/admin/login/login";
+			}
+			
+			List<UserVO> userList = userDAO.selectList();
+	
+			model.addAttribute("userList", userList);
 		
-		//jsp쪽으로 넘겨준다는 의미
-		model.addAttribute("userList", userList);
 		
-		
-		return "/admin/users/list";
-		//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
+			return "/admin/users/list";
+			//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
 	}
 	
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
 	@RequestMapping(value = "/admin/users/info", method = RequestMethod.GET)
 	public String info(
 			@ModelAttribute("sessionUsername") String sessionUsername
 			, @RequestParam(value="id") int id
 			, @RequestParam(required=false, value="username") String username
-			, Locale locale
 			, Model model) {
 		
 		UserVO user = userDAO.select(id);
 		
 		model.addAttribute("userVO", user);
-		
+
 		System.out.println(sessionUsername);
 		
-		//userDAO의 list를 가져와서 userlist로 저장
-		//List<UserVO> userList = userDAO.selectList();
-		
-		//하나만 가져오는 거면
-		//UserVO user = userDAO.select(id);
-		//model.addAttribute("id", id);
-		
-		//jsp쪽으로 넘겨준다는 의미
-		//model.addAttribute("userList", userList);
-		//model.addAttribute("id", id);
-		//model.addAttribute("username",username);
-		
-		
-		return "/admin/users/info";
-		//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
+		return "admin/users/info";
 	}
 
 	@RequestMapping(value = "/admin/users/add", method = RequestMethod.GET)
-	public String add(Locale locale, Model model) {
-		
+	public String add(
+			@ModelAttribute("sessionUsername") String sessionUsername
+			, Model model) {
 		//안에 코드 없이 화면에 jsp파일을 뿌려주는 역할을 함
 		return "admin/users/add";
 		//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
@@ -128,7 +124,6 @@ public class AdminController {
 			, Locale locale
 			, Model model) {
 		//userDAO의 list를 가져와서 userlist로 저장
-		List<UserVO> userList = userDAO.selectList();
 		
 		//하나만 가져오는 거면
 		UserVO user = userDAO.select(id);
@@ -136,13 +131,6 @@ public class AdminController {
 		model.addAttribute("userVO", user);
 		
 		System.out.println(sessionUsername);
-		//model.addAttribute("id", id);
-		
-		//jsp쪽으로 넘겨준다는 의미
-		//model.addAttribute("userList", userList);
-		//model.addAttribute("id", id);
-		//model.addAttribute("username",username);
-		
 		
 		return "/admin/users/edit";
 		//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
@@ -151,7 +139,7 @@ public class AdminController {
 	@RequestMapping(value = "/admin/users/doEdit", method = RequestMethod.POST)
 	public String doAdd(
 		//username을 가져올건데 String의 username으로 선언할거야
-			@RequestParam(value="id") int id
+		@RequestParam(value="id") int id
 		, @RequestParam(value="username") String username
 		, @RequestParam(value="passwd") String passwd
 		, @RequestParam(value="point") int point
@@ -174,50 +162,49 @@ public class AdminController {
 		userVO.setCoupon(coupon);
 		userVO.setEmail(email);
 	
-		userDAO.update(userVO);
+		userDAO.insert(userVO);
 		
 		return "/admin/users/doAdd";
-		//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
 	}
 	
 
-	@RequestMapping(value = "/admin/users/login", method = RequestMethod.GET)
-	public String login(Locale locale, Model model) {
+	@RequestMapping(value = "/admin/login/login", method = RequestMethod.GET)
+	public String login(
+			@SessionAttribute(required=false, value="sessionUsername") String sessionUsername
+			, Model model) {
 		
-		//만약 비번이랑 안맞으면 로그인실패~~~ 리다이렉트ㅡㅡㅡㅡㅡ
+		if (sessionUsername == null || sessionUsername.equals("")) {
+			
+		}else {
+			return "redirect:/admin/users/list";
+		}
 		
-		//안에 코드 없이 화면에 jsp파일을 뿌려주는 역할을 함
-		return "admin/users/login";
-		//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
+		return "admin/login/login";
 	}
 	
-	/////////////////으아ㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇㅇ아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㄱ
-	@RequestMapping(value = "/admin/users/doLogin", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/login/doLogin", method = RequestMethod.POST)
 	public String doLogin(
-		//username을 가져올건데 String의 username으로 선언할거야
+		@SessionAttribute(required=false, value="sessionUsername") String sessionUsername
 		, @RequestParam(value="username") String username
 		, @RequestParam(value="passwd") String passwd
-		
-		, @ModelAttribute("sessionUsername") String sessionUsername
 		, Model model){
-		
 		
 		UserVO userVO = userDAO.selectByUsername(username);
 		if (userVO.getPasswd().equals(passwd)) {
 			model.addAttribute("sessionUsername", userVO.getUsername());
-			model.addAttribute("sessionUsername", userVO.getUsername());
+			model.addAttribute("sessionEmail", userVO.getEmail());
 			//DB에서 가져온 userVO.getEmail 나에 대한 정보를 저장하게 됨
+			return "redirect:/admin/users/list";
+			
 		}else {
 			model.addAttribute("sessionUsername", "");
-			model.addAttribute("sessionUsername", "");
+			model.addAttribute("sessionEmail", "");
 		}
 		
-		
-		return "/admin/users/doLogin";
-		//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
-	}
+		return "redirect:/admin/login/login";
+		}
 	
-	@RequestMapping(value = "/admin/users/doLogout", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/login/logout", method = RequestMethod.GET)
 	public String doLogout(
 		//username을 가져올건데 String의 username으로 선언할거야
 		@ModelAttribute("sessionUsername") String sessionUsername
@@ -227,14 +214,6 @@ public class AdminController {
 			model.addAttribute("sessionUsername", "");
 			model.addAttribute("sessionEmail", "");
 		
-		//여기도 리다이렉ㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌ트
-		
-		return "redirect:/admin/users/doLogout";
-		//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
+		return "redirect:/admin/login/logout";
 	}
 }
-
-
-
-
-
