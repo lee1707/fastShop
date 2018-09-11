@@ -78,7 +78,7 @@ public class ProductController {
 			, @RequestParam(value="name") String name
 			, @RequestParam(value="price") int price
 			, @RequestParam(value="description") String description
-			, @RequestParam(value="company_id") String company_id
+			, @RequestParam(value="company_id") int company_id
 			, Model model) throws IOException {
 		
 		// Save file on system
@@ -103,7 +103,7 @@ public class ProductController {
 	      productVO.setName(name);
 	      productVO.setPrice(price);
 	      productVO.setDescription(description);
-	      
+	      productVO.setCompany_id(company_id);
 	      ////////////////////////여기 company_id는 어떻게?하지?
 	      productDAO.insert(productVO);
 	      
