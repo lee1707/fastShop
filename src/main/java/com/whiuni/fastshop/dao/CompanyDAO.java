@@ -29,5 +29,9 @@ public class CompanyDAO extends SqlSessionDaoSupport{
 	public void delete(int id) {
 		getSqlSession().delete("Company.delete",id);
 	}
+
+	public CompanyVO select(int id) {
+		return getSqlSession().selectOne("Company.select",id);
+	}
 }
 

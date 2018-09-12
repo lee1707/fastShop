@@ -85,7 +85,7 @@ public class ProductController {
 	      if (!file.getOriginalFilename().isEmpty()) {
 	         BufferedOutputStream outputStream = new BufferedOutputStream(
 	               new FileOutputStream(
-	                     new File("C:\\Users\\gramgram\\Desktop\\java", file.getOriginalFilename())));
+	                     new File("C://files", file.getOriginalFilename())));
 	         outputStream.write(file.getBytes());
 	         outputStream.flush();
 	         outputStream.close();

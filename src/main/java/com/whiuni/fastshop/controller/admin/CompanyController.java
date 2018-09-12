@@ -1,11 +1,4 @@
-package com.whiuni.fastshop;
-
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-
-import javax.servlet.http.HttpSession;
+package com.whiuni.fastshop.controller.admin;
 
 import java.util.List;
 import java.util.Locale;
@@ -22,40 +15,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.whiuni.fastshop.dao.UserDAO;
+import com.whiuni.fastshop.dao.CompanyDAO;
+import com.whiuni.fastshop.vo.CompanyVO;
+import com.whiuni.fastshop.vo.ProductVO;
 import com.whiuni.fastshop.vo.UserVO;
+
 
 
 @Controller
 @SessionAttributes({"sessionUsername","sessionEmail"})
-public class AdminController {
+public class CompanyController {
 		
-	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
 	
 	@Autowired
-	private UserDAO userDAO;
+	private CompanyDAO companyDAO;
 	
-	@RequestMapping(value = "/admin/users/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/company/list", method = RequestMethod.GET)
 	public String list(
-			@SessionAttribute(required=false, value="sessionUsername") String sessionUsername
-			, @SessionAttribute(required=false, value="sessionEmail") String sessionEmail
-			, @RequestParam(value="username", defaultValue="") String username
-			, @RequestParam(value="id", defaultValue="0") int id
-			, Locale locale
-			, Model model) {
-	
-			//로그인 성공햇는가에 따라 다르게 나누기
-			if(sessionUsername.equals("")) {
-				return "redirect:/admin/login/login";
-			}
-			
-			List<UserVO> userList = userDAO.selectList();
-	
-			model.addAttribute("userList", userList);
+				@ModelAttribute("sessionUsername") String sessionUsername
+				, @ModelAttribute("sessionEmail") String sessionEmail
+				, Model model) {
 		
+		if ( sessionUsername.equals("") ) {
+			return "redirect:/admin/login/login";
+		}
 		
-			return "/admin/users/list";
-			//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
+		List<CompanyVO> companyList = companyDAO.selectList();
+		
+		model.addAttribute("companyList", companyList);
+	
+		
+		return "admin/company/list";
 	}
 	
 	/**

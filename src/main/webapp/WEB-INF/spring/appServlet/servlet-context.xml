@@ -18,7 +18,7 @@
 	<resources mapping="/bootstrap/**" location="/resources/bootstrap/" />
 	<resources mapping="/admin/**" location="/resources/admin/" />
 	<resources mapping="/resources/**" location="/resources/" />
-	<resources mapping="/images/**" location="C:\\Users\\gramgram\\Desktop\\java"/>
+	<resources mapping="/files/**" location="file:C:/files/"/>
 
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -52,7 +52,7 @@
 		<beans:property name="typeAliasesPackage" value="com.whiuni.fastshop" />
 		<beans:property name="configLocation" value="/WEB-INF/mybatis-config.xml" />
 		<beans:property name="mapperLocations"
-			value="classpath*:com/whiuni/fastshop/dao/*.xml" />
+			value="classpath*:com/whiuni/fastshop/dao/sqlmap/*.xml" />
 	</beans:bean>
 
 	<beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">

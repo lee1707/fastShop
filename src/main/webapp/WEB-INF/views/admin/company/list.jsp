@@ -1,11 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,6 +17,12 @@
 
     <!-- MetisMenu CSS -->
     <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="../vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="../vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
@@ -373,7 +377,7 @@
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Forms</h1>
+                    <h1 class="page-header">Tables</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -382,48 +386,44 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Basic Form Elements
+                            DataTables Advanced Tables
                         </div>
+                        <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <form role="form" action="/admin/users/doAdd" method="post">
-                                    
-                                        <div class="form-group">
-                                            <label>id</label>
-                                            ${id}
-                                        </div>
-                                        <div class="form-group">
-                                            <label>password</label>
-                                            ${passwd}
-                                        </div>
-                                        <div class="form-group">
-                                            <label>point</label>
-                                            ${point}
-                                        </div>
-                                        <div class="form-group">
-                                            <label>coupon(int)</label>
-                                            ${coupon}
-                                        </div>
-                                        <div class="form-group">
-                                            <label>email</label>
-                                            ${email}
-                                        </div>
-                                        <button type="submit" class="btn btn-default">회원추가</button>
-          								<a href="list" class="btn-btn-success">목록추가</a>                              
-                                    </form>
-                                </div>
-                                
-                            </div>
-                            <!-- /.row (nested) -->
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>회사번호</th>
+                                        <th>회사이름</th>
+                                        <th>전화번호</th>
+                                        <th>팩스</th>
+                                        <th>이메일</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <!-- controller에서 넘긴 값을 가져옴 -->
+<c:forEach items="${companyList}" var="companyVO">
+                                    <tr class="odd gradeX">
+                                        <td>${companyVO.id}</td>  <!-- 이 부분 수정필요함 -->
+                                        <td><a href="/admin/company/info?id=${companyVO.id}">${companyVO.name}</a></td>
+                                        <td>${companyVO.phone}</td>
+                                        <td>${companyVO.fax}</td>
+                                        <td>${companyVO.email}</td>
+                                    </tr>
+</c:forEach>                            
+   
+                                </tbody>
+      
+                            </table>  
+                            <a href="add" class="btn-btn-success">회사추가</a>  
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
+                
                 <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
 
@@ -439,8 +439,22 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
+    <!-- DataTables JavaScript -->
+    <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
+
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+    </script>
 
 </body>
 

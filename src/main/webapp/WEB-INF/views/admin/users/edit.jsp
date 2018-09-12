@@ -387,10 +387,10 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <form role="form" action="doAdd" method="post">
+                                    <form role="form" action="doEdit" method="post">
                                    	 	<div class="form-group">
                                             <label>회원번호</label>
-                                            <input type="hidden" name="username" value="${userVO.id}" class="form-control">
+                                            <input type="hidden" name="id" value="${userVO.id}" class="form-control">
                                         </div>
                                         
                                         <div class="form-group">
@@ -411,9 +411,9 @@
                                         </div>
                                         <div class="form-group">
                                             <label>email</label>
-                                            <input name="email" value="${userVO.email} class="form-control" placeholder="Email을 입력하세요">
+                                            <input name="email" value="${userVO.email}" class="form-control" placeholder="Email을 입력하세요">
                                         </div>
-                                        <button type="submit" class="btn btn-default">회원추가</button>
+                                        <button type="submit" class="btn btn-default">수정완료</button>
           								<a href="list" class="btn-btn-success">목록보기</a>                              
                                     </form>
                                 </div>

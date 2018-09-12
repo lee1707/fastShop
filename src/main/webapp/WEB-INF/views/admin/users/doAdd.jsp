@@ -7,4 +7,4 @@
 ${username}을 추가했습니다.
 ${email}
 
-<a href="list" class="btn-btn-success">목록추가</a>
+<a href="list" class="btn-btn-success">목록으로</a>
