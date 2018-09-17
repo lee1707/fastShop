@@ -26,6 +26,21 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
+
+	<!-- 인터셉터 객체 생성 -->
+    <beans:bean id="sessionHandlerInterceptor" class="com.whiuni.fastshop.SessionHandlerInterceptor">
+    </beans:bean>
+    <!-- Interceptor 설정 -->
+    <interceptors>
+        <interceptor>
+            <mapping path="/admin/**"/>
+            <exclude-mapping path="/admin/vendor/**"/>
+            <exclude-mapping path="/admin/login/**"/>
+            <beans:ref bean="sessionHandlerInterceptor"/>
+        </interceptor>
+    </interceptors>
+    
+    
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
 

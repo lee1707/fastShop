@@ -1,4 +1,4 @@
-package com.whiuni.fastshop;
+package com.whiuni.fastshop.controller.admin;
 
 import java.text.DateFormat;
 import java.util.Date;

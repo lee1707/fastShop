@@ -1,4 +1,4 @@
-package com.whiuni.fastshop;
+package com.whiuni.fastshop.controller.admin;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -37,18 +37,11 @@ public class AdminController {
 	
 	@RequestMapping(value = "/admin/users/list", method = RequestMethod.GET)
 	public String list(
-			@SessionAttribute(required=false, value="sessionUsername") String sessionUsername
-			, @SessionAttribute(required=false, value="sessionEmail") String sessionEmail
-			, @RequestParam(value="username", defaultValue="") String username
+			@RequestParam(value="username", defaultValue="") String username
 			, @RequestParam(value="id", defaultValue="0") int id
 			, Locale locale
 			, Model model) {
-	
-			//로그인 성공햇는가에 따라 다르게 나누기
-			if(sessionUsername.equals("")) {
-				return "redirect:/admin/login/login";
-			}
-			
+		
 			List<UserVO> userList = userDAO.selectList();
 	
 			model.addAttribute("userList", userList);
@@ -63,8 +56,7 @@ public class AdminController {
 	 */
 	@RequestMapping(value = "/admin/users/info", method = RequestMethod.GET)
 	public String info(
-			@ModelAttribute("sessionUsername") String sessionUsername
-			, @RequestParam(value="id") int id
+			@RequestParam(value="id") int id
 			, @RequestParam(required=false, value="username") String username
 			, Model model) {
 		
@@ -72,15 +64,12 @@ public class AdminController {
 		
 		model.addAttribute("userVO", user);
 
-		System.out.println(sessionUsername);
-		
 		return "admin/users/info";
 	}
 
 	@RequestMapping(value = "/admin/users/add", method = RequestMethod.GET)
 	public String add(
-			@ModelAttribute("sessionUsername") String sessionUsername
-			, Model model) {
+			Model model) {
 		//안에 코드 없이 화면에 jsp파일을 뿌려주는 역할을 함
 		return "admin/users/add";
 		//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
@@ -94,7 +83,6 @@ public class AdminController {
 		, @RequestParam(value="point") int point
 		, @RequestParam(value="coupon") String coupon
 		, @RequestParam(value="email") String email
-		, @ModelAttribute("sessionUsername") String sessionUsername
 		, Model model){
 		
 		//jsp쪽으로 넘겨준다는 의미
@@ -118,8 +106,7 @@ public class AdminController {
 	
 	@RequestMapping(value = "/admin/users/edit", method = RequestMethod.GET)
 	public String edit(
-			@ModelAttribute("sessionUsername") String sessionUsername
-			, @RequestParam(value="id") int id
+			@RequestParam(value="id") int id
 			, @RequestParam(required=false, value="username") String username
 			, Locale locale
 			, Model model) {
@@ -129,8 +116,6 @@ public class AdminController {
 		UserVO user = userDAO.select(id);
 		
 		model.addAttribute("userVO", user);
-		
-		System.out.println(sessionUsername);
 		
 		return "/admin/users/edit";
 		//return이 "home"일경우 home은 view아래에서 home.jsp파일을 찾아라 라는 의미임. home.jsp파일이 출력됨.
@@ -145,7 +130,6 @@ public class AdminController {
 		, @RequestParam(value="point") int point
 		, @RequestParam(value="coupon") String coupon
 		, @RequestParam(value="email") String email
-		, @ModelAttribute("sessionUsername") String sessionUsername
 		, Model model){
 		
 		//jsp쪽으로 넘겨준다는 의미
