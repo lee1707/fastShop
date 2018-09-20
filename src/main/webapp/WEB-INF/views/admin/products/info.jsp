@@ -400,7 +400,7 @@
                                         </div>
                                         
                                         
-                                        <a href="edit?id=${productVO.id }" class="btn btn-default">회원 수정</a>
+                                        <a href="edit?id=${productVO.id }" class="btn btn-default">물품 수정</a>
                                         
                                         <a href="list" class="btn btn-default">목록으로</a>
                                     </form>
