@@ -401,10 +401,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                <!-- controller에서 넘긴 값을 가져옴 -->
 <c:forEach items="${companyList}" var="companyVO">
                                     <tr class="odd gradeX">
-                                        <td>${companyVO.id}</td>  <!-- 이 부분 수정필요함 -->
+                                        <td>${companyVO.id}</td>  
                                         <td><a href="/admin/company/info?id=${companyVO.id}">${companyVO.name}</a></td>
                                         <td>${companyVO.phone}</td>
                                         <td>${companyVO.fax}</td>
